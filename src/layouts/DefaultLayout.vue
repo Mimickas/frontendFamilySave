@@ -4,7 +4,7 @@
 
 <template>
     <Header />
-    <div class="px-100 bg-[var(--bg)] min-h-screen pt-20">
+    <div class="bg-[var(--bg)] min-h-screen pt-20">
         <router-view></router-view>
     </div>
 </template>

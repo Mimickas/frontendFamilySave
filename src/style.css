@@ -3,31 +3,31 @@
 
 @font-face {
     font-family: "helvetica-heavy";
-    src: url("/public/fonts/ref/ReflowMonoDemo-ExtraBold-BF691e9dbf5b471.ttf");
+    src: url("/public/fonts/nd/nadea-black.otf");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: "helvetica-bold";
-    src: url("/public/fonts/ref/ReflowMonoDemo-Bold-BF691e9dbf4142e.ttf");
+    src: url("/public/fonts/nd/nadea-bold.otf");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: "helvetica-light";
-    src: url("/public/fonts/ref/ReflowMonoDemo-Regular-BF691e9dbf26f87.ttf");
+    src: url("/public/fonts/HelveticaNeueLight.otf");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: "helvetica-medium";
-    src: url("/public/fonts/ref/ReflowMonoDemo-Medium-BF691e9dbf4dd2c.ttf");
+    src: url("/public/fonts/nd/nadea-medium.otf");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: "helvetica-reg";
-    src: url("/public/fonts/ref/ReflowMonoDemo-Regular-BF691e9dbf26f87.ttf");
+    src: url("/public/fonts/nd/nadea-regular.otf");
     font-weight: normal;
     font-style: normal;
 }
