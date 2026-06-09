@@ -3,31 +3,31 @@
 
 @font-face {
     font-family: "helvetica-heavy";
-    src: url("/public/fonts/HelveticaNeueHeavy.otf");
+    src: url("/public/fonts/ref/ReflowMonoDemo-ExtraBold-BF691e9dbf5b471.ttf");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: "helvetica-bold";
-    src: url("/fonts/HelveticaNeueBold.otf");
+    src: url("/public/fonts/ref/ReflowMonoDemo-Bold-BF691e9dbf4142e.ttf");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: "helvetica-light";
-    src: url("/fonts/HelveticaNeueLight.otf");
+    src: url("/public/fonts/ref/ReflowMonoDemo-Regular-BF691e9dbf26f87.ttf");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: "helvetica-medium";
-    src: url("/fonts/HelveticaNeueMedium.otf");
+    src: url("/public/fonts/ref/ReflowMonoDemo-Medium-BF691e9dbf4dd2c.ttf");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: "helvetica-reg";
-    src: url("/fonts/HelveticaNeueRoman.otf");
+    src: url("/public/fonts/ref/ReflowMonoDemo-Regular-BF691e9dbf26f87.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -87,4 +87,24 @@
     --text-muted:      #4a5568;
 
     --text: #e2e8f0;
+}
+
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+    transition:
+        background-color 0.4s ease,
+        color 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease !important;
+}
+
+.label-enter-active,
+.label-leave-active {
+    transition: opacity 0.2s ease;
+}
+.label-enter-from,
+.label-leave-to {
+    opacity: 0;
 }

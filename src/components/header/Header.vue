@@ -5,6 +5,23 @@ import gsap from 'gsap'
 const isOpen = ref(false)
 const menuContent = ref(null)
 
+const theme = ref(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light')
+
+function setTheme(value) {
+    document.documentElement.classList.add('theme-transitioning')
+
+    theme.value = value
+    if (value === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark')
+    } else {
+        document.documentElement.removeAttribute('data-theme')
+    }
+
+    setTimeout(() => {
+        document.documentElement.classList.remove('theme-transitioning')
+    }, 400)
+}
+
 watch(isOpen, (val) => {
     if (val) {
         gsap.fromTo(menuContent.value,
@@ -30,21 +47,48 @@ watch(isOpen, (val) => {
                 </div>
 
                 <div class="flex flex-col gap-1.5 cursor-pointer" @click="isOpen = !isOpen">
-                    <div class="w-15 h-0.75 rounded-full bg-[var(--text-primary)] transition-all duration-300"
+                    <div class="w-15 h-0.5 rounded-full bg-[var(--text-primary)] transition-all duration-300"
                         :class="isOpen ? 'rotate-15 translate-y-[5px]' : ''"
                     ></div>
-                    <div class="w-15 h-0.75 rounded-full bg-[var(--text-primary)] transition-all duration-300"
+                    <div class="w-15 h-0.5 rounded-full bg-[var(--text-primary)] transition-all duration-300"
                         :class="isOpen ? '-rotate-15 -translate-y-[3px]' : ''"
                     ></div>
                 </div>
             </div>
 
-            <div ref="menuContent" class="overflow-hidden flex items-center justify-center h-0 opacity-0">
-                <nav class="py-6 flex flex-col gap-4">
-                    <a href="#" class="text-[var(--text-primary)] hover:text-[var(--color-full-spectrum-blue-500)] transition-colors">Home</a>
-                    <a href="#" class="text-[var(--text-primary)] hover:text-[var(--color-full-spectrum-blue-500)] transition-colors">About</a>
-                    <a href="#" class="text-[var(--text-primary)] hover:text-[var(--color-full-spectrum-blue-500)] transition-colors">Contact</a>
-                </nav>
+            <div ref="menuContent" class="overflow-hidden h-0 opacity-0">
+
+                <div class="flex items-center justify-center">
+                    <nav class="py-40 flex flex-col gap-4 text-center text-6xl font-medium">
+                        <router-link to="/">
+                            <a href="#" class="text-[var(--text-primary)] hover:text-[var(--color-full-spectrum-blue-500)] transition-colors">Home</a>
+                        </router-link>
+                        <router-link to="/about">
+                            <a href="#" class="text-[var(--text-primary)] hover:text-[var(--color-full-spectrum-blue-500)] transition-colors">About</a>
+                        </router-link>
+                        <router-link to="/contact">
+                            <a href="#" class="text-[var(--text-primary)] hover:text-[var(--color-full-spectrum-blue-500)] transition-colors">Contact</a>
+                        </router-link>
+                    </nav>
+                </div>
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+                        <span class="text-sm text-[var(--text-secondary)]">&copy; 2026 Family save</span>
+                    </div>
+                   
+                    <Transition name="label" mode="out-in">
+                        <span
+                            :key="theme"
+                            @click="setTheme(theme === 'light' ? 'dark' : 'light')"
+                            class="text-sm underline cursor-pointer text-[var(--text-primary)]"
+                        >
+                            {{ theme === 'light' ? 'Dark' : 'Light' }}
+                        </span>
+                    </Transition>
+                </div>
+
             </div>
 
         </div>
@@ -52,3 +96,4 @@ watch(isOpen, (val) => {
 
     <div class="h-[72px]"></div>
 </template>
+
