@@ -4,8 +4,7 @@
 
 <template>
     <Header />
-    <div>
-        <h1>Default Layout</h1>
+    <div class="px-100">
         <router-view></router-view>
     </div>
 </template>
