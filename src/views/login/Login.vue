@@ -1,4 +1,5 @@
 <script setup>
+import { useRouter } from 'vue-router'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import BaseButton from '../../components/ui/BaseButton.vue'
 import BaseInput from '../../components/ui/BaseInput.vue'
@@ -6,12 +7,12 @@ import BaseDivider from '../../components/ui/BaseDivider.vue'
 import GoogleButton from '../../components/ui/GoogleButton.vue'
 import { useLoginForm } from '../../composables/useLoginForm.js'
 
-const { email, password, emailErrors, passwordErrors, validate, reset } = useLoginForm()
+const router = useRouter()
+const { email, password, emailErrors, passwordErrors, loading, serverError, submit } = useLoginForm()
 
-function handleLogin() {
-    if (!validate()) return
-    console.log('login ok', email.value, password.value)
-    // appel API ici
+async function handleLogin() {
+    const result = await submit()
+    if (result) router.push('/dashboard')
 }
 
 function handleGoogle() {
@@ -22,10 +23,8 @@ function handleGoogle() {
 <template>
     <div class="min-h-screen lg:h-screen flex flex-col lg:flex-row">
 
-        <!-- LEFT — caché sur mobile -->
         <div class="hidden lg:flex w-[60%] flex-col justify-between relative bg-[var(--bg-secondary)]">
             <div class="absolute inset-0 p-10 flex flex-col justify-between">
-
                 <div>
                     <FontAwesomeIcon icon="arrow-left" class="text-[var(--text-primary)] text-lg cursor-pointer"/>
                     <div class="mt-10">
@@ -37,17 +36,14 @@ function handleGoogle() {
                         </div>
                     </div>
                 </div>
-
                 <div class="bg-[var(--bg-card)] rounded-xl p-6 w-full max-w-sm">
                     <span class="font-reg text-sm text-[var(--text-primary)]">
                         Raha toa ka efa vonona anefa ianao dia Manasa anao hitsidika avy antrany
                     </span>
                 </div>
-
             </div>
         </div>
 
-        <!-- RIGHT -->
         <div class="w-full lg:w-[50%] h-full bg-[var(--bg-card)] flex items-center justify-center p-6 sm:p-10 lg:p-16">
             <div class="w-full max-w-[70%]">
 
@@ -67,6 +63,11 @@ function handleGoogle() {
                 <GoogleButton @click="handleGoogle" />
 
                 <BaseDivider label="na" class="my-6" />
+
+                <!-- erreur serveur -->
+                <div v-if="serverError" class="mb-4 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+                    <span class="text-xs text-red-500 font-reg">{{ serverError }}</span>
+                </div>
 
                 <div class="flex flex-col gap-4">
                     <BaseInput
@@ -90,8 +91,9 @@ function handleGoogle() {
                         </span>
                     </div>
 
-                    <BaseButton variant="primary" :full="true" @click="handleLogin">
-                        Miditra
+                    <BaseButton variant="primary" :full="true" @click="handleLogin" :disabled="loading">
+                        <span v-if="loading">Miandry...</span>
+                        <span v-else>Miditra</span>
                     </BaseButton>
                 </div>
 
