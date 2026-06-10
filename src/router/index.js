@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DefaultLayout from '../layouts/DefaultLayout.vue'
-import Home from '../views//home/Home.vue'
+import Home from '../views/home/Home.vue'
+import Login from '../views/login/Login.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,13 @@ const router = createRouter({
                 component: () => import('../views/about/About.vue')
             }
         ]
+    },
+    {
+       
+        path: '/login',
+        name: 'login',
+        component: Login
+
     },
     {
         path: '/:catchAll(.*)*',

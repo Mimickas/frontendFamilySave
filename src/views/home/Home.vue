@@ -2,19 +2,19 @@
     <div class="mt-15 container mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="flex text-center justify-center gap-10 flex-col-reverse lg:flex-row">
-            <div class="max-w-2xl">
+            <div class="max-w-3xl">
                 <div class="my-2">
-                    <span class="font-medium text-sm text-[var(--text-secondary)]">
+                    <span class="font-bold text-sm text-[var(--text-secondary)]">
                         APPLICATION NATAO HOAN'NY FIANAKAVIANA, HO AN'NY REHETRA.
                     </span>
                 </div>
 
-                <span class="font-medium text-3xl sm:text-5xl lg:text-7xl text-[var(--text-primary)]">
+                <span class="font-bold text-3xl sm:text-5xl lg:text-6xl text-[var(--text-primary)]">
                     Fitantanam-bola
                 </span>
 
-                <span class="font-medium text-3xl sm:text-5xl lg:text-7xl text-[var(--text-primary)]">
-                    tsotra, mahitsy, azo antoka.
+                <span class="font-bold text-3xl sm:text-5xl lg:text-6xl text-[var(--text-primary)]">
+                    tsotra,mahitsy,azo antoka.
                 </span>
 
                 <div class="mt-6 text-base sm:text-lg font-reg text-[var(--text-muted)]">
@@ -22,19 +22,21 @@
                 </div>
 
                 <div class="my-6 flex flex-col sm:flex-row justify-center items-center gap-4">
-                    <button class="w-full sm:w-auto
-                            border-1
-                            border-[var(--color-full-spectrum-blue-500)] 
-                            text-[var(--color-full-spectrum-blue-500)] 
-                            rounded-xl py-3 px-5
-                            hover:bg-[var(--color-full-spectrum-blue-100)]
-                            active:bg-[var(--color-full-spectrum-blue-200)]
-                            active:scale-95
-                            font-reg
-                            transition-all duration-200 ease-in-out
-                            cursor-pointer">
-                        Atomboka izao
-                    </button>
+                    <router-link to="/login">
+                        <button class="w-full sm:w-auto
+                                border-1
+                                border-[var(--color-full-spectrum-blue-500)] 
+                                text-[var(--color-full-spectrum-blue-500)] 
+                                rounded-xl py-3 px-5
+                                hover:bg-[var(--color-full-spectrum-blue-100)]
+                                active:bg-[var(--color-full-spectrum-blue-200)]
+                                active:scale-95
+                                font-reg
+                                transition-all duration-200 ease-in-out
+                                cursor-pointer">
+                            Atomboka izao
+                        </button>
+                    </router-link>
                     <button class="w-full sm:w-auto
                             bg-[var(--color-full-spectrum-blue-500)] 
                             text-[var(--color-full-spectrum-blue-50)] 
