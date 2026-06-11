@@ -91,7 +91,8 @@
 
     async function handleRegister() {
         const result = await submitRegister()
-        await handlePanel("login");
+        console.log('register result', result)
+        if (result.data !== "" || result.data !== null || result !== undefined) await handlePanel("login");
         // if (result) router.push('/dashboard')
     }
 

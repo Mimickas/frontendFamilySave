@@ -17,7 +17,7 @@
                     tsotra,mahitsy,azo antoka.
                 </span>
 
-                <div class="mt-6 text-base sm:text-lg font-reg text-[var(--text-muted)]">
+                <div class="mt-6 text-base sm:text-md font-light text-[var(--text-muted)]">
                     Manampy anao hitahiry sy handamina <br class="hidden sm:block"> ny volanao amin'ny fomba tsotra sy mahomby izahay.
                 </div>
 
@@ -62,7 +62,7 @@
 
                 <hr class="my-4 border-[var(--text-primary)] w-20">
 
-                <span class="font-reg text-sm text-[var(--color-full-spectrum-blue-500)]">
+                <span class="font-light text-sm text-[var(--color-full-spectrum-blue-500)]">
                     Araho fotsiny dingana ao ambany
                     <font-awesome-icon icon="arrow-down" class="ml-2 text-[var(--color-full-spectrum-blue-500)]"/>
                 </span>   
