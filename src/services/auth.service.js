@@ -18,5 +18,12 @@ export const authService = {
 
     logout() {
         localStorage.removeItem('token')
-    }
+    },
+
+    async register(dto) {
+        console.log('numero:', dto.numero, typeof dto.numero)
+        const { data } = await api.post('/users', dto)
+        return data
+    },
 }
+

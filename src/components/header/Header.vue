@@ -20,20 +20,20 @@ function setTheme(value) {
     setTimeout(() => {
         document.documentElement.classList.remove('theme-transitioning')
     }, 400)
-}
-
-watch(isOpen, (val) => {
-    if (val) {
-        gsap.fromTo(menuContent.value,
-            { height: 0, opacity: 0 },
-            { height: 'auto', opacity: 1, duration: 0.4, ease: 'power2.out' }
-        )
-    } else {
-        gsap.to(menuContent.value,
-            { height: 0, opacity: 0, duration: 0.3, ease: 'power2.in' }
-        )
     }
-})
+
+    watch(isOpen, (val) => {
+        if (val) {
+            gsap.fromTo(menuContent.value,
+                { height: 0, opacity: 0 },
+                { height: 'auto', opacity: 1, duration: 0.4, ease: 'power2.out' }
+            )
+        } else {
+            gsap.to(menuContent.value,
+                { height: 0, opacity: 0, duration: 0.3, ease: 'power2.in' }
+            )
+        }
+    })
 </script>
 
 <template>
