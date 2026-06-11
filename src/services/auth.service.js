@@ -2,7 +2,7 @@ import api from './api.js'
 
 export const authService = {
     async login(email, password) {
-        const { data } = await api.get('/users', { email, password })
+        const { data } = await api.post('/auth/login', { email, password })
         return data
     },
 
@@ -22,7 +22,7 @@ export const authService = {
 
     async register(dto) {
         console.log('numero:', dto.numero, typeof dto.numero)
-        const { data } = await api.post('/users', dto)
+        const { data } = await api.post('/auth/register', dto)
         return data
     },
 }
