@@ -9,6 +9,7 @@
     import GoogleButton from '../../components/ui/GoogleButton.vue'
     import { useLoginForm} from '../../composables/useLoginForm.js'
     import { useRegisterForm } from '../../composables/useRegisterForm.js'
+    import PhoneInput from '../../components/ui/PhoneInput.vue'
 
     const router = useRouter()
 
@@ -183,7 +184,7 @@
             </div>
 
             <!-- REGISTER -->
-            <div v-if="activePanel === 'register'" ref="registerRef" class="w-full max-w-[70%]">
+            <div v-if="activePanel === 'register'" ref="registerRef" class="w-full max-w-[70%] ">
 
                 <div class="mb-6">
                     <span class="font-bold text-2xl sm:text-3xl text-[var(--text-primary)]">
@@ -211,9 +212,11 @@
                     <BaseInput v-model="regPassword" label="Teny miafina" type="password" placeholder="••••••••" :errors="regPasswordErrors" />
                 </div>
 
-                <div class="mt-4">
-                    <BaseInput v-model="numero" label="Laharana finday" type="tel" placeholder="+261 34 00 000 00" :errors="numeroErrors" />
+   
+                <div class="mt-4 ">
+                    <PhoneInput v-model="numero" label="Laharana finday" :errors="numeroErrors" default-country="MG" />
                 </div>
+
 
                 <div class="mt-4">
                     <BaseInput v-model="dateNaissance" label="Daty nahaterahana" type="date" :errors="dateNaissanceErrors" />
