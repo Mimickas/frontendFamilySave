@@ -10,11 +10,12 @@
     import { useLoginForm} from '../../composables/useLoginForm.js'
     import { useRegisterForm } from '../../composables/useRegisterForm.js'
     import PhoneInput from '../../components/ui/PhoneInput.vue'
+import { useVerificationCode } from '../../composables/useVerificationCode.js'
 
     const router = useRouter()
 
     const { email, password, emailErrors, passwordErrors, loading, serverError, submit } = useLoginForm()
-
+    
     const {
         email: regEmail,
         password: regPassword,
@@ -27,11 +28,20 @@
         submit: submitRegister,
     } = useRegisterForm()
 
-    const activePanel = ref('login')
+    const {
+        verificationCode,
+        verificationCodeErrors,
+        loading: verLoading,
+        serverError: verServerError,
+        submit: submitVerificationCode,
+    } = useVerificationCode()
+
+    const activePanel = ref('code_ok')
     const isAnimating = ref(false)
     const loginRef = ref(null)
+    const verification_codeRef = ref(null)
     const registerRef = ref(null)
-
+    const veirfEmail = ref('');
     function animateOut(el, direction) {
         return new Promise(resolve => {
             const children = [...el.children]
@@ -65,6 +75,11 @@
         })
     }
 
+    function codeConfirmer() {
+        activePanel.value = 'code_ok'
+        // animateIn(verification_codeRef.value, 'from-top')
+    }
+
     async function handlePanel(target) {
         if (isAnimating.value) return
         isAnimating.value = true
@@ -74,6 +89,11 @@
             activePanel.value = 'register'
             await nextTick()
             await animateIn(registerRef.value, 'from-top')
+        } else if (target === 'verification_code') {
+                await animateOut(registerRef.value, 'down')
+                activePanel.value = 'verification_code'
+                await nextTick()
+                await animateIn(loginRef.value, 'from-top')
         } else {
             await animateOut(registerRef.value, 'up')
             activePanel.value = 'login'
@@ -91,10 +111,20 @@
     }
 
     async function handleRegister() {
+        veirfEmail.value = regEmail.value
         const result = await submitRegister()
         console.log('register result', result)
-        if (result.data !== "" || result.data !== null || result !== undefined) await handlePanel("login");
-        // if (result) router.push('/dashboard')
+        result.success === true ? handlePanel("verification_code") : null
+
+    }
+
+    async function handleVerificationCode() {
+        const result = await submitVerificationCode(veirfEmail.value)
+        veirfEmail.value = ''
+        codeConfirmer();
+        console.log('verification code result', result)
+
+        // result.success === true ? await handlePanel("login") : null
     }
 
     function handleGoogle() {
@@ -238,6 +268,39 @@
                     </span>
                 </div>
 
+            </div>
+
+            <div ref="verification_codeRef" v-if="activePanel === 'verification_code'" class="w-full max-w-[70%] ">
+
+                <div class="mb-6">
+                    <span class="font-bold text-2xl sm:text-3xl text-[var(--text-primary)]">
+                        Kaody fanamarinana 
+                    </span>
+                    <p class="font-light text-sm text-[var(--text-muted)] mt-2">
+                        Misy Kaody fanamarinana nalefa any amin'ny mailakao, Ampidiro eto ambany azafady
+                    </p>
+                </div>
+
+                <div class="mt-4">
+                    <BaseInput
+                        v-model="verificationCode"
+                        label="Kaody fanamarinana"
+                        placeholder="123456"
+                        hint="Ampidiro ny isa 6 ihany"
+                        :errors="verificationCodeErrors"
+                    />
+                </div>
+
+                <div class="mt-6">
+                    <BaseButton variant="primary" :full="true" @click="handleVerificationCode" :disabled="verLoading">
+                        <span v-if="verLoading">Miandry...</span>
+                        <span v-else>Manamarina</span>
+                    </BaseButton>
+                </div>
+            </div>
+
+            <div v-if="activePanel === 'code_ok'">
+                <!-- <img src="/img/b36cb88a-1150-11ee-8f49-9b6c0bfe85bb.gif" alt="" class="w-40" srcset=""> -->
             </div>
 
         </div>

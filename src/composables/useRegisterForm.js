@@ -3,7 +3,7 @@ import { authService } from '../services/auth.service.js'
 
 // mots interdits
 const MOTS_INTERDITS = [
-    'merde', 'putain', 'connard', 'salope', 'con', 'idiot',
+    'merde', 'putain', 'connard', 'salope', 'con', 'idiot', 'fory', 'salaud', 'saloperie',
     'imbecile', 'batard', 'enculé', 'fdp', 'pute', 'pd',
 ]
 

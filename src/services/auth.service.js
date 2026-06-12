@@ -25,5 +25,10 @@ export const authService = {
         const { data } = await api.post('/auth/register', dto)
         return data
     },
+
+    async verifyCode(email, code) {
+        const { data } = await api.post('/auth/verify', { email, code })
+        return data
+    }
 }
 

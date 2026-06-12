@@ -5,6 +5,7 @@
         placeholder: String,
         modelValue: String,
         errors: { type: Array, default: () => [] },
+        hint: String, // 👈
     })
 
     defineEmits(['update:modelValue'])
@@ -27,6 +28,10 @@
                     : 'border-transparent focus:border-[var(--color-full-spectrum-blue-500)]'
             ]"
         />
+        <!-- Hint -->
+        <span v-if="hint && !errors.length" class="text-xs text-[var(--text-secondary)] font-reg">
+            {{ hint }}
+        </span>
         <span
             v-for="error in errors"
             :key="error"
