@@ -10,7 +10,9 @@
     import { useLoginForm} from '../../composables/useLoginForm.js'
     import { useRegisterForm } from '../../composables/useRegisterForm.js'
     import PhoneInput from '../../components/ui/PhoneInput.vue'
-import { useVerificationCode } from '../../composables/useVerificationCode.js'
+    import { DotLottieVue } from '@lottiefiles/dotlottie-vue'
+    import { useVerificationCode } from '../../composables/useVerificationCode.js'
+import { authService } from '../../services/auth.service.js'
 
     const router = useRouter()
 
@@ -36,12 +38,13 @@ import { useVerificationCode } from '../../composables/useVerificationCode.js'
         submit: submitVerificationCode,
     } = useVerificationCode()
 
-    const activePanel = ref('code_ok')
+    const activePanel = ref('login')
     const isAnimating = ref(false)
     const loginRef = ref(null)
     const verification_codeRef = ref(null)
     const registerRef = ref(null)
     const veirfEmail = ref('');
+
     function animateOut(el, direction) {
         return new Promise(resolve => {
             const children = [...el.children]
@@ -75,9 +78,36 @@ import { useVerificationCode } from '../../composables/useVerificationCode.js'
         })
     }
 
-    function codeConfirmer() {
+    function animateFadeIn(el) {
+        return new Promise(resolve => {
+            const children = [...el.children]
+            gsap.fromTo(children,
+                {opacity:0, scale:0.1},
+                {
+                    opacity:1, 
+                    scale:1,
+                    duration: 0.22,
+                    stagger: 0.055,
+                    ease: 'power2.out',
+                    onComplete: resolve,
+                }
+            )
+        })
+    }
+
+    const audioRef = ref(null)
+
+        audioRef.value = new Audio('/sound/koiroylers-correct-356013.mp3')
+
+    async function codeConfirmer() {
         activePanel.value = 'code_ok'
-        // animateIn(verification_codeRef.value, 'from-top')
+        audioRef.value.play()
+
+        await new Promise(resolve => setTimeout(resolve, 2000))
+
+        activePanel.value = 'login'
+        await nextTick()
+        await animateFadeIn(loginRef.value) 
     }
 
     async function handlePanel(target) {
@@ -105,7 +135,13 @@ import { useVerificationCode } from '../../composables/useVerificationCode.js'
     }
 
     async function handleLogin() {
-        const result = await submit()
+        try {
+            
+            const result = await submit()
+            console.log(result)
+        } catch (error) {
+            console.log(error);
+        }
         //  await handlePanel("login");
         // if (result) router.push('/dashboard')
     }
@@ -120,8 +156,9 @@ import { useVerificationCode } from '../../composables/useVerificationCode.js'
 
     async function handleVerificationCode() {
         const result = await submitVerificationCode(veirfEmail.value)
-        veirfEmail.value = ''
-        codeConfirmer();
+        // veirfEmail.value = ''
+
+        result !== undefined ? await codeConfirmer() : null
         console.log('verification code result', result)
 
         // result.success === true ? await handlePanel("login") : null
@@ -130,6 +167,21 @@ import { useVerificationCode } from '../../composables/useVerificationCode.js'
     function handleGoogle() {
         console.log('google login')
     }
+
+    const resendError = ref('')
+    const resendSuccess = ref('')
+
+    async function handleResend() {
+        resendError.value = ''
+        resendSuccess.value = ''
+        try {
+            const res = await authService.resendCode(veirfEmail.value)
+            resendSuccess.value = res.message // ✅ 'Nouveau code envoyé'
+        } catch (error) {
+            resendError.value = error.response?.data?.message || 'Erreur inconnue'
+        }
+    }
+
 </script>
 
 <template>
@@ -271,7 +323,9 @@ import { useVerificationCode } from '../../composables/useVerificationCode.js'
             </div>
 
             <div ref="verification_codeRef" v-if="activePanel === 'verification_code'" class="w-full max-w-[70%] ">
-
+                <div v-if="verServerError" class="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+                    <span class="text-xs text-red-500 font-reg">{{ verServerError }}</span>
+                </div>
                 <div class="mb-6">
                     <span class="font-bold text-2xl sm:text-3xl text-[var(--text-primary)]">
                         Kaody fanamarinana 
@@ -297,10 +351,19 @@ import { useVerificationCode } from '../../composables/useVerificationCode.js'
                         <span v-else>Manamarina</span>
                     </BaseButton>
                 </div>
+                <div class="mt-2">
+                    <span v-if="resendError" class="text-xs text-red-400 font-reg">{{ resendError }}</span>
+                    <span v-if="resendSuccess" class="text-xs text-green-500 font-reg">{{ resendSuccess }}</span>
+                </div>
+                <div class="text-right mt-2">
+                    <span class="text-xs text-[var(--color-full-spectrum-blue-500)] cursor-pointer hover:underline font-reg" @click="handleResend">
+                        Avereno alefa
+                    </span>
+                </div>
             </div>
 
             <div v-if="activePanel === 'code_ok'">
-                <!-- <img src="/img/b36cb88a-1150-11ee-8f49-9b6c0bfe85bb.gif" alt="" class="w-40" srcset=""> -->
+                <DotLottieVue style="height: 250px; width: 250px" autoplay src="https://lottie.host/95764dcc-f24b-4a19-8ddd-ddfe78ec7daa/F7k7NzZJ3O.lottie" />
             </div>
 
         </div>

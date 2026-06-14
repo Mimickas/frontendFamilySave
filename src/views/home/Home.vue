@@ -1,3 +1,26 @@
+<script setup>
+    import { authService } from '../../services/auth.service';
+    import { onMounted } from 'vue';
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter()
+
+    onMounted(async () => {
+        await checkAuth()
+    })
+
+    async function checkAuth() {
+        try {
+            const { data } = await authService.me()
+            console.log(data);
+            // userStore.set(data.data)
+        } catch(error) {
+           console.log(error);
+        }
+    }
+
+</script>
+
 <template>
     <div class="mt-15 container mx-auto px-4 sm:px-6 lg:px-8">
         

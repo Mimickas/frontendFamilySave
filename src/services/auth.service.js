@@ -29,6 +29,11 @@ export const authService = {
     async verifyCode(email, code) {
         const { data } = await api.post('/auth/verify', { email, code })
         return data
+    },
+
+    async resendCode(email) {
+        const { data } = await api.post('/auth/resend', { email })
+        return data
     }
 }
 

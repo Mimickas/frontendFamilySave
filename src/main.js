@@ -3,7 +3,7 @@ import './style.css'
 import App from './App.vue'
 import router from './router'
 import 'flag-icons/css/flag-icons.min.css'
-
+import '@lottiefiles/dotlottie-wc'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
